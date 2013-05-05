@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="da" ng-app="replaceme">
+<head ng-app="TravelTours">
+    <meta charset="utf-8">
+    <title>TravelTours</title>
+
+    <!-- twitter bootstrap -->
+    <link href="resources/css/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="resources/css/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Angular, Angular-resources and Angular UI bootstrap -->
+    <script src="resources/lib/angular-1.0.6.js"></script>
+    <script src="resources/lib/angular-resource-1.0.6.js"></script>
+    <script src="resources/lib/ui-bootstrap-tpls-0.2.0.js"></script>
+
+    <!-- Application specific javascript modules -->
+    <script src="app/traveltours/util.js"></script>
+    <script src="app/traveltours/traveltours.js"></script>
+    <script src="app/traveltours/base.js"></script>
+    <script src="app/traveltours/home/home.js"></script>
+    <script src="app/traveltours/travel/travel.js"></script>
+
+</head>
+<body ng-controller="replaceme.BaseController">
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+
+            <button type="button" class="btn btn-navbar" data-toggle="collapse"
+                    data-target=".nav-collapse">
+                <span class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="brand" href="#">Replaceme</a>
+
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Default starting point of the pages -->
+<div style="height: 42px"></div>
+
+<!-- This is where the pages will run -->
+<div class="container">
+    <div ng-view></div>
+    <hr>
+
+    <footer>
+        <p>&copy; Travel Tours 2013</p>
+    </footer>
+
+</div>
+
+</body>
+</html>
