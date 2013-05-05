@@ -5,12 +5,12 @@ describe('ToDoService tests',function(){
 
     //Create an easily-removed container for our tests to play in
     beforeEach(function() {
-        console.log("beforeEach");
+        //console.log("beforeEach");
     });
 
     //Clean it up after each spec
     afterEach(function() {
-        console.log("afterEach");
+        //console.log("afterEach");
     });
 
     //Specs
@@ -19,9 +19,9 @@ describe('ToDoService tests',function(){
             var locator = undefined;
             var routeParams = undefined;
             var toDoService = replaceme.services.ToDoService(locator, routeParams);
-            console.log("toDoService instantiated");
+            //console.log("toDoService instantiated");
             var todoArray = toDoService.mapJsonToToDoItem(toDoJsonData);
-            console.log("todoArray: " + todoArray);
+            //console.log("todoArray: " + todoArray);
             expect(todoArray.length).toBe(8);
         });
     });
@@ -29,11 +29,11 @@ describe('ToDoService tests',function(){
     describe('second example',function() {
 
         beforeEach(function(){
-            console.log("second.example.beforeEach");
+            //console.log("second.example.beforeEach");
         });
 
         it('shows how to provide another test method',function(){
-            console.log("second.example.it")
+           // console.log("second.example.it")
         });
 
     });

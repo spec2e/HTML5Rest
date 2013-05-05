@@ -75,7 +75,7 @@
                     <skipTests>false</skipTests>
                     <format>documentation</format>
                     <browserVersion>FIREFOX_3_6</browserVersion>
-                    <haltOnFailure>false</haltOnFailure>
+                    <haltOnFailure>true</haltOnFailure>
 
                     <preloadSources>
                         <source>${project.basedir}/src/main/webapp/resources/lib/angular-1.0.6.js</source>

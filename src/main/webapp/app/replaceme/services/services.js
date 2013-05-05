@@ -17,7 +17,7 @@ replaceme.services.ToDoService = function ($resource, $routeParams) {
         ;
 
     create = function (todo, callback) {
-        console.log("ToDoService.create");
+        //console.log("ToDoService.create");
         var ToDoProxy = $resource(REST_CREATE_URL);
         var proxy = new ToDoProxy();
         proxy.subject = todo.subject;
@@ -31,7 +31,7 @@ replaceme.services.ToDoService = function ($resource, $routeParams) {
     };
 
     read = function (id, callback) {
-        console.log("ToDoService.read");
+        //console.log("ToDoService.read");
 
         //If we already have the country loaded, just put it in the callback and return
         if (currentTodo && currentTodo.id === id) {
@@ -48,7 +48,7 @@ replaceme.services.ToDoService = function ($resource, $routeParams) {
     };
 
     list = function (callback) {
-        console.log("ToDoService.list");
+        //console.log("ToDoService.list");
         var todos = $resource(REST_LIST_URL);
         todos.query(function (data) {
             var todosArray = mapJsonToToDoItem(data);
@@ -71,7 +71,7 @@ replaceme.services.ToDoService = function ($resource, $routeParams) {
 
     mapJsonToToDoItem = function (jsonData) {
         var todosArray = [];
-        console.log("mapJsonToToDoItem: " + jsonData);
+        //console.log("mapJsonToToDoItem: " + jsonData);
         angular.forEach(jsonData, function (todoElement) {
             console.log("foreach: " + todoElement);
             var todo = new replaceme.model.ToDo(todoElement);
