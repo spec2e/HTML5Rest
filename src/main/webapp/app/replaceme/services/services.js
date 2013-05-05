@@ -13,7 +13,7 @@ replaceme.services.ToDoService = function ($resource, $routeParams) {
         remove,
         list,
         currentTodo,
-        mapJsonToToDoItem
+        mapJsonArrayToToDoItem
         ;
 
     create = function (todo, callback) {
@@ -51,7 +51,7 @@ replaceme.services.ToDoService = function ($resource, $routeParams) {
         //console.log("ToDoService.list");
         var todos = $resource(REST_LIST_URL);
         todos.query(function (data) {
-            var todosArray = mapJsonToToDoItem(data);
+            var todosArray = mapJsonArrayToToDoItem(data);
             callback(todosArray);
         });
     };
@@ -69,9 +69,9 @@ replaceme.services.ToDoService = function ($resource, $routeParams) {
         });
     };
 
-    mapJsonToToDoItem = function (jsonData) {
+    mapJsonArrayToToDoItem = function (jsonData) {
         var todosArray = [];
-        //console.log("mapJsonToToDoItem: " + jsonData);
+        //console.log("mapJsonArrayToToDoItem: " + jsonData);
         angular.forEach(jsonData, function (todoElement) {
             console.log("foreach: " + todoElement);
             var todo = new replaceme.model.ToDo(todoElement);
@@ -87,7 +87,7 @@ replaceme.services.ToDoService = function ($resource, $routeParams) {
         remove: remove,
         list: list,
         currentTodo: currentTodo,
-        mapJsonToToDoItem: mapJsonToToDoItem
+        mapJsonArrayToToDoItem: mapJsonArrayToToDoItem
     };
 
 };
