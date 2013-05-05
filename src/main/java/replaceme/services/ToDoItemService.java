@@ -14,17 +14,18 @@ import java.util.List;
 public class ToDoItemService extends CRUDService<ToDoItem> {
 
     @Override
-    @Path("/Create")
+    @Path("/create")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @ValidateRequest
     public ToDoItem create(@Valid ToDoItem resource) {
+        System.out.println("ToDoItemService.create");
         return null;
     }
 
     @Override
-    @Path("Read")
+    @Path("read")
     @GET
     @ValidateRequest
     public ToDoItem read(@NotNull String id) {
@@ -32,7 +33,7 @@ public class ToDoItemService extends CRUDService<ToDoItem> {
     }
 
     @Override
-    @Path("/Update")
+    @Path("/update")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -42,7 +43,7 @@ public class ToDoItemService extends CRUDService<ToDoItem> {
     }
 
     @Override
-    @Path("Delete")
+    @Path("delete")
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @ValidateRequest
@@ -51,17 +52,17 @@ public class ToDoItemService extends CRUDService<ToDoItem> {
     }
 
     @Override
-    @Path("/All")
+    @Path("/all")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<ToDoItem> all() {
         return null;
     }
 
-    @Path("ShareList")
+    @Path("share")
     @POST
     @ValidateRequest
-    public void shareList(@NotNull String email) {
+    public void share(@NotNull String email) {
 
     }
 
