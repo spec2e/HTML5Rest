@@ -26,7 +26,7 @@ public class ToDoItemServiceTest {
 
 
         {
-            MockHttpRequest request = MockHttpRequest.post("ToDoItem/create");
+            MockHttpRequest request = MockHttpRequest.post("ToDo/create");
             request.contentType(MediaType.APPLICATION_JSON_TYPE);
 
             ToDoItem testItem = new ToDoItem();

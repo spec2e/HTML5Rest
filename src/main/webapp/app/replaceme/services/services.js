@@ -12,27 +12,29 @@ replaceme.services.ToDoService = function ($resource, $routeParams) {
         update,
         remove,
         list,
-        currentTodo;
+        currentTodo,
+        mapJsonToToDoItem
+        ;
 
     create = function (todo, callback) {
         console.log("ToDoService.create");
         var ToDoProxy = $resource(REST_CREATE_URL);
         var proxy = new ToDoProxy();
-        proxy.subject = todo.country;
-        proxy.whatToDo = todo.areas;
+        proxy.subject = todo.subject;
+        proxy.whatToDo = todo.whatToDo;
 
-        proxy.$save(todo, function(data) {
+        proxy.$save(todo, function (data) {
             var todo = new replaceme.model.ToDo(data);
             currentTodo = todo;
             callback(todo);
         });
     };
 
-    read = function(id, callback) {
+    read = function (id, callback) {
         console.log("ToDoService.read");
 
         //If we already have the country loaded, just put it in the callback and return
-        if(currentTodo && currentTodo.id === id) {
+        if (currentTodo && currentTodo.id === id) {
             callback(currentTodo);
             return;
         }
@@ -45,29 +47,37 @@ replaceme.services.ToDoService = function ($resource, $routeParams) {
         });
     };
 
-    list = function(callback) {
+    list = function (callback) {
         console.log("ToDoService.list");
         var todos = $resource(REST_LIST_URL);
-        var todoList = todos.query(function (data) {
-            var todosArray = [];
-            angular.forEach(todoList, function (country) {
-                todosArray.push(country);
-            });
-            callback(todoList);
+        todos.query(function (data) {
+            var todosArray = mapJsonToToDoItem(data);
+            callback(todosArray);
         });
     };
 
-    update = function(todo, callback) {
+    update = function (todo, callback) {
         var ToDoUpdateProxy = $resource(REST_UPDATE_URL);
         var proxy = new ToDoUpdateProxy();
         proxy.id = todo.id;
-        proxy.subject = todo.country;
-        proxy.whatToDo = todo.areas;
+        proxy.subject = todo.subject;
+        proxy.whatToDo = todo.whatToDo;
         proxy.$save(function (data) {
-            var todo = new replaceme.model.Country(data);
+            var todo = new replaceme.model.ToDo(data);
             currentTodo = todo;
             callback(todo)
         });
+    };
+
+    mapJsonToToDoItem = function (jsonData) {
+        var todosArray = [];
+        console.log("mapJsonToToDoItem: " + jsonData);
+        angular.forEach(jsonData, function (todoElement) {
+            console.log("foreach: " + todoElement);
+            var todo = new replaceme.model.ToDo(todoElement);
+            todosArray.push(todo);
+        });
+        return todosArray;
     };
 
     return {
@@ -76,7 +86,8 @@ replaceme.services.ToDoService = function ($resource, $routeParams) {
         update: update,
         remove: remove,
         list: list,
-        currentTodo: currentTodo
+        currentTodo: currentTodo,
+        mapJsonToToDoItem: mapJsonToToDoItem
     };
 
 };

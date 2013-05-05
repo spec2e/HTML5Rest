@@ -11,7 +11,13 @@ replaceme.todo.CreateController = function($scope, $routeParams, $resource, todo
             $scope.go('/home');
         });
     }
+};
 
+replaceme.todo.ListController = function($scope, $routeParams, $resource, todoService) {
 
+    $scope.todoList = [];
 
+    todoService.list(function(data) {
+        angu
+    });
 };

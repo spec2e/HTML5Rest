@@ -1,4 +1,9 @@
 <!DOCTYPE html>
 <div>
-    list
+    <table>
+        <tr ng-repeat="todo in todoList">
+            <td>{{todo.subject}}</td>
+            <td>{{todo.whatToDo}}</td>
+        </tr>
+    </table>
 </div>
