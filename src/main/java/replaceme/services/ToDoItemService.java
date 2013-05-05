@@ -21,7 +21,8 @@ public class ToDoItemService extends CRUDService<ToDoItem> {
     @ValidateRequest
     public ToDoItem create(@Valid ToDoItem resource) {
         System.out.println("ToDoItemService.create");
-        return null;
+        resource.setId("1");
+        return resource;
     }
 
     @Override

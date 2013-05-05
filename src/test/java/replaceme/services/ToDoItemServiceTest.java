@@ -24,28 +24,31 @@ public class ToDoItemServiceTest {
         POJOResourceFactory noDefaults = new POJOResourceFactory(ToDoItemService.class);
         dispatcher.getRegistry().addResourceFactory(noDefaults);
 
+
         {
             MockHttpRequest request = MockHttpRequest.post("ToDoItem/create");
             request.contentType(MediaType.APPLICATION_JSON_TYPE);
 
             ToDoItem testItem = new ToDoItem();
-            //testItem.setSubject("subject");
-            //testItem.setWhatToDo("whatToDo");
+            testItem.setSubject("subject");
+            testItem.setWhatToDo("whatToDo");
 
             Gson gson = new Gson();
             String content = gson.toJson(testItem);
-            System.out.println("content = " + content);
             request.content(content.getBytes());
 
             MockHttpResponse response = new MockHttpResponse();
 
             dispatcher.invoke(request, response);
 
-            Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, response.getStatus());
+            Assert.assertEquals(HttpServletResponse.SC_OK, response.getStatus());
 
-            System.out.println("response = " + response.getErrorMessage());
+            ToDoItem toDoItem = gson.fromJson(response.getContentAsString(), ToDoItem.class);
 
-            //Assert.assertEquals("basic", response.getContentAsString());
+            Assert.assertEquals("1", toDoItem.getId());
+            Assert.assertEquals("subject", toDoItem.getSubject());
+            Assert.assertEquals("whatToDo", toDoItem.getWhatToDo());
+
         }
 
     }
