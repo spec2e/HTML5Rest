@@ -16,7 +16,7 @@
 
 
     <build>
-        <finalName>WebDevSample-war.war</finalName>
+        <finalName>replaceme-war.war</finalName>
         <plugins>
             <!--  Facilitates downloading source and javadoc in Eclipse -->
             <plugin>
