@@ -9,6 +9,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.Set;
 
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 
 public class ToDoItemTest {
@@ -28,6 +29,6 @@ public class ToDoItemTest {
         Validator validator = factory.getValidator();
 
         Set<ConstraintViolation<ToDoItem>> constraintViolations = validator.validate(toDoItem);
-        assertNull(constraintViolations);
+        assertNotNull(constraintViolations);
     }
 }
