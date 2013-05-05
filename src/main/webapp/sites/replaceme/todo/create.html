@@ -1,4 +1,27 @@
 <!DOCTYPE html>
 <div ng-controller="replaceme.todo.CreateController">
-    create
+
+    <form ng-submit="create()">
+        <fieldset>
+            <legend>Create ToDo</legend>
+            <table>
+                <tr>
+                    <td><label>ToDo</label></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="Enter ToDo subject" ng-model="todo.subject" required/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" placeholder="Enter what to do"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Create ToDo</button>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
 </div>
