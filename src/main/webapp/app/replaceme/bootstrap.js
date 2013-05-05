@@ -16,5 +16,51 @@ replacemeModule.config(['$routeProvider', function ($routeProvider) {
         otherwise({redirectTo: '/home'});
 }]);
 
+replacemeModule.run(function($rootScope, $location) {
+
+    $rootScope.go = function(path) {
+        $location.url(path);
+    };
+
+    $rootScope.alerts = [];
+    $rootScope.alertsViewed = false;
+
+    $rootScope.addSuccessMessage = function(msg) {
+        var alert = { type: 'success', msg: msg };
+        $rootScope.alerts.push(alert);
+        $rootScope.alertsViewed = false;
+    };
+
+    $rootScope.addErrorMessage = function(msg) {
+        var alert = { type: 'error', msg: msg };
+        $rootScope.alerts.push(alert);
+        $rootScope.alertsViewed = false;
+    };
+
+    $rootScope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
+
+    $rootScope.selected = '';
+
+    //Reset the alerts...
+    $rootScope.$on('$routeChangeSuccess', function (scope, next, current) {
+        if($rootScope.alertsViewed === true) {
+            $rootScope.alerts = [];
+        } else {
+            $rootScope.alertsViewed = true;
+        }
+    });
+
+
+});
+
+
+//Register the countryService...
+replacemeModule.factory('todoService', ['$resource', '$routeParams',
+    function ($resource, $routeParams) {
+        return replaceme.services.ToDoService($resource, $routeParams);
+    }
+]);
 
 

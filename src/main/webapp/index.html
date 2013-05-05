@@ -16,6 +16,8 @@
     <!-- Application specific javascript modules -->
     <script src="app/replaceme/util.js"></script>
     <script src="app/replaceme/bootstrap.js"></script>
+    <script src="app/replaceme/model.js"></script>
+    <script src="app/replaceme/services/services.js"></script>
     <script src="app/replaceme/todo/todo.js"></script>
     <script src="app/replaceme/home/home.js"></script>
 
@@ -48,8 +50,15 @@
 <!-- Default starting point of the pages -->
 <div style="height: 42px"></div>
 
+
+
 <!-- This is where the pages will run -->
 <div class="container">
+
+    <div ng-show="alerts.length > 0">
+        <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+    </div>
+
     <div ng-view></div>
     <hr>
 
