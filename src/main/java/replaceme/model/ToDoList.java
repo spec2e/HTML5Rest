@@ -1,11 +1,13 @@
 package replaceme.model;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ToDoList {
+public class ToDoList extends Resource {
 
+    @Valid
     private List<ToDoItem> toDoItems = new ArrayList<ToDoItem>();
 
     @NotNull
@@ -17,11 +19,14 @@ public class ToDoList {
         return toDoItems;
     }
 
-    public void setToDoItems(@NotNull List<ToDoItem> toDoItems) {
+    public void setToDoItems(List<ToDoItem> toDoItems) {
         this.toDoItems = toDoItems;
     }
 
-    public void addToDoItem(@NotNull ToDoItem toDoItem) {
+    public void addToDoItem(ToDoItem toDoItem) {
+        if(toDoItem == null) {
+            throw new IllegalArgumentException("toDoItem can not be null!");
+        }
         toDoItems.add(toDoItem);
     }
 

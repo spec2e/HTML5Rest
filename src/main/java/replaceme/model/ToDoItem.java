@@ -2,7 +2,7 @@ package replaceme.model;
 
 import javax.validation.constraints.NotNull;
 
-public class ToDoItem {
+public class ToDoItem extends Resource {
 
     @NotNull
     private String subject;
