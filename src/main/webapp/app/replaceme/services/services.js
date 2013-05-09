@@ -71,9 +71,7 @@ replaceme.services.ToDoService = function ($resource, $routeParams) {
 
     mapJsonArrayToToDoItem = function (jsonData) {
         var todosArray = [];
-        //console.log("mapJsonArrayToToDoItem: " + jsonData);
         angular.forEach(jsonData, function (todoElement) {
-            console.log("foreach: " + todoElement);
             var todo = new replaceme.model.ToDo(todoElement);
             todosArray.push(todo);
         });
