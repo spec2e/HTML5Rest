@@ -16,6 +16,10 @@ replaceme.todo.CreateController = function($scope, $routeParams, $resource, todo
 replaceme.todo.Tab1Controller = function($scope, $routeParams, $resource, todoService) {
 
     $scope.message = 'Tab 1 message';
+    $scope.editSubject = function(index) {
+        $scope.selectedIndex = index;
+        $('#subject' + index).focus();
+    };
 
     $scope.todoList = [];
 

@@ -18,7 +18,7 @@
                     <tr ng-repeat="todo in todoList | filter:query">
                         <td>
                             <p ng-click="selectedIndex=$index" ng-show="selectedIndex!=$index" ng-hide="selectedIndex==$index" >{{todo.subject}} {{selectedIndex}}</p>
-                            <input type="text" ng-blur="selectedIndex=-1" ng-model="todo.subject" ng-show="selectedIndex==$index" ng-hide="selectedIndex!=$index" />
+                            <input type="text" ng-focus="selectedIndex==$index" ng-blur="selectedIndex=-1" ng-model="todo.subject" ng-show="selectedIndex==$index" ng-hide="selectedIndex!=$index" />
                         </td>
                         <td>{{todo.whatToDo}}</td>
                     </tr>
