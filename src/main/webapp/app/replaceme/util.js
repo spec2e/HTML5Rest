@@ -18,3 +18,10 @@ function namespace(namespaceString) {
 
     return parent;
 }
+
+
+function log(message) {
+    if(typeof(console) !== 'undefined' && console !== null) {
+        console.log(message);
+    }
+}

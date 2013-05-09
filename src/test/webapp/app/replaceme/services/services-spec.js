@@ -13,19 +13,19 @@ describe('ToDoService tests', function () {
     });
 
     //Specs
-    describe('Tests mapping of ToDo from JSON to Array', function () {
-        it('maps a returned JSON array to an array of replaceme.todo.ToDo objects', function () {
+    describe('Test mapping of ToDo from JSON to Array', function () {
+        it('should map a JSON array to an array of replaceme.model.ToDo objects', function () {
             var locator = undefined;
             var routeParams = undefined;
             var toDoService = replaceme.services.ToDoService(locator, routeParams);
-            //console.log("toDoService instantiated");
+            log("toDoService instantiated");
             var todoArray = toDoService.mapJsonArrayToToDoItem(toDoJsonData);
-            //console.log("todoArray: " + todoArray);
+            log("todoArray: " + todoArray);
             expect(todoArray.length).toBe(0);
         });
     });
 
-    describe('Test JSON to ToDo', function () {
+    describe('Test JSON mapping to replaceme.model.ToDo', function () {
 
         beforeEach(function () {
             //console.log("second.example.beforeEach");
