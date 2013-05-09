@@ -4,7 +4,7 @@ replaceme.services.ToDoService = function ($resource, $routeParams) {
 
     var REST_CREATE_URL = replaceme.REST_BASE_URL + 'ToDo/create';
     var REST_READ_URL = replaceme.REST_BASE_URL + 'ToDo/read/:id'
-    var REST_LIST_URL = replaceme.REST_BASE_URL + 'ToDo/list';
+    var REST_LIST_URL = replaceme.REST_BASE_URL + 'ToDo/all';
     var REST_UPDATE_URL = replaceme.REST_BASE_URL + 'ToDo/update';
 
     var create,

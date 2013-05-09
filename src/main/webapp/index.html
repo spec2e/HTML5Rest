@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="da" ng-app="ReplaceMe">
-<head ng-app="TravelTours">
+<head>
     <meta charset="utf-8">
     <title>TravelTours</title>
 
@@ -37,10 +37,8 @@
 
             <div class="nav-collapse collapse">
                 <ul class="nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li class="active"><a href="#/todo/create">Create ToDo</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li class="active"><a ng-href="#/todo/create">Create ToDo</a></li>
+                    <li><a ng-href="#/todo/list">List ToDo's</a></li>
                 </ul>
             </div>
         </div>
@@ -63,7 +61,7 @@
     <hr>
 
     <footer>
-        <p>&copy; Travel Tours 2013</p>
+        <p class="text-center">&copy; MyCompany 2013</p>
     </footer>
 
 </div>

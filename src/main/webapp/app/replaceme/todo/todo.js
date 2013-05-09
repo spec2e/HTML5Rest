@@ -8,16 +8,22 @@ replaceme.todo.CreateController = function($scope, $routeParams, $resource, todo
         var todoToCreate = $scope.todo;
         todoService.create(todoToCreate, function (todoToCreate) {
             $scope.addSuccessMessage("ToDo was created");
-            $scope.go('/home');
+            $scope.go('/todo/list');
         });
     }
 };
 
-replaceme.todo.ListController = function($scope, $routeParams, $resource, todoService) {
+replaceme.todo.Tab1Controller = function($scope, $routeParams, $resource, todoService) {
+
+    $scope.message = 'Tab 1 message';
 
     $scope.todoList = [];
 
-    todoService.list(function(data) {
-        angu
+    todoService.list(function(list) {
+        $scope.todoList = list;
     });
+};
+
+replaceme.todo.Tab2Controller = function($scope, $routeParams, $resource, todoService) {
+    $scope.message = 'Tab 2 message';
 };

@@ -12,7 +12,8 @@ replacemeModule.config(['$routeProvider', function ($routeProvider) {
         when('/todo/create', {templateUrl: 'sites/replaceme/todo/create.html', controller: replaceme.todo.CreateController}).
         when('/todo/show/:id', {templateUrl: 'sites/replaceme/todo/show.html', controller: replaceme.todo.ShowController}).
         when('/todo/update/:id', {templateUrl: 'sites/replaceme/todo/update.html', controller: replaceme.todo.UpdateController}).
-        when('/todo/list', {templateUrl: 'sites/replaceme/todo/list.html', controller: replaceme.todo.ListController}).
+        //when('/todo/list', {templateUrl: 'sites/replaceme/todo/list.html', controller: replaceme.todo.ListController}).
+        when('/todo/list', {templateUrl: 'sites/replaceme/todo/list.html'}).
         otherwise({redirectTo: '/home'});
 }]);
 
@@ -38,7 +39,7 @@ replacemeModule.run(function($rootScope, $location) {
     };
 
     $rootScope.closeAlert = function(index) {
-        $scope.alerts.splice(index, 1);
+        $rootScope.alerts.splice(index, 1);
     };
 
     $rootScope.selected = '';

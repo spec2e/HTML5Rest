@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -77,7 +78,8 @@ public class ToDoItemService extends CRUDService<ToDoItem> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<ToDoItem> all() {
-        return (List<ToDoItem>) todos.values();
+        List<ToDoItem> toDoItemList = new ArrayList<ToDoItem>(todos.values());
+        return toDoItemList;
     }
 
     @Path("share")
