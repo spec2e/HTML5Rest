@@ -1,3 +1,11 @@
 .icon-plus-sign, .icon-minus-sign {
     cursor: pointer;
 }
+
+.show {
+    display:block;
+}
+
+.hide {
+    display:none;
+}
