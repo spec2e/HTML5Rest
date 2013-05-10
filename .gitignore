@@ -7,3 +7,7 @@
 *.jar
 *.war
 *.ear
+
+replaceme-war/target
+replaceme-war/.idea
+replaceme-war/*.iml
