@@ -9,7 +9,8 @@
     <name>replaceme</name>
 
     <modules>
-	<module>replaceme-war</module>	
+        <module>replaceme-war</module>
+        <module>replaceme-e2e-test</module>
     </modules>
 
 </project>

@@ -11,3 +11,7 @@
 replaceme-war/target
 replaceme-war/.idea
 replaceme-war/*.iml
+
+replaceme-e2e-test/*.iml
+replaceme-e2e-test/target/
+replaceme-war/.idea
