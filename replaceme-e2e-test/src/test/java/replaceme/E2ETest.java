@@ -36,7 +36,7 @@ public class E2ETest {
     public void runE2ETest() {
         WebDriver driver = new FirefoxDriver();
 
-        driver.get("http://localhost:8180/blog/angularjs-scenario-runner/runner.html");
+        driver.get("http://localhost:8180/replaceme-war-1.0-SNAPSHOT-e2etest/runner.html");
 
         ExpectedCondition e = new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {

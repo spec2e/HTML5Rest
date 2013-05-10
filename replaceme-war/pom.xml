@@ -16,7 +16,7 @@
 
 
     <build>
-        <finalName>replaceme-war.war</finalName>
+        <finalName>replaceme-war</finalName>
         <plugins>
             <!--  Facilitates downloading source and javadoc in Eclipse -->
             <plugin>
@@ -28,6 +28,49 @@
                     <downloadSources>true</downloadSources>
                     <downloadJavadocs>true</downloadJavadocs>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp</directory>
+                            <filtering>true</filtering>
+                            <includes>
+                                <include>**/jboss-web.xml</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>e2etest</id>
+
+                        <configuration>
+                            <classifier>e2etest</classifier>
+                            <webappDirectory>${project.build.directory}/${project.build.finalName}-e2etest</webappDirectory>
+                            <webResources>
+                                <resource>
+                                    <directory>src/main/webapp</directory>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>**/jboss-web.xml</include>
+                                    </includes>
+                                </resource>
+
+                                <resource>
+                                    <directory>src/test/webapp</directory>
+                                </resource>
+                            </webResources>
+                        </configuration>
+                        <goals>
+                            <goal>war</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
 
