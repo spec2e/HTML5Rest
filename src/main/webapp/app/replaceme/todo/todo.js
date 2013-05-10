@@ -15,10 +15,18 @@ replaceme.todo.CreateController = function($scope, $routeParams, $resource, todo
 
 replaceme.todo.Tab1Controller = function($scope, $routeParams, $resource, todoService) {
 
-    $scope.message = 'Tab 1 message';
-    $scope.editSubject = function(index) {
-        $scope.selectedIndex = index;
-        $('#subject' + index).focus();
+    $scope.toggleEditSubject = function(index, $event) {
+        //var element = angular.element($event.target);
+        //log("id: " + element.attr('id'));
+        if($scope.selectedIndex === index) {
+            //Reset the selectedIndex variable
+            $scope.selectedIndex = -1;
+        } else {
+            $scope.selectedIndex = index;
+        }
+    };
+    $scope.isSubjectEditing = function(index) {
+        return $scope.selectedIndex === index;
     };
 
     $scope.todoList = [];
