@@ -3,6 +3,7 @@ package replaceme;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.io.InputStream;
 
 @RunWith(Arquillian.class)
 public class E2ETest {
@@ -26,17 +28,43 @@ public class E2ETest {
                 "replaceme",
                 "replaceme-war",
                 "1.0-SNAPSHOT",
-                "e2etest",
+                null,
                 "war"
         );
-        return ShrinkWrap.createFromZipFile(WebArchive.class, war);
+
+        WebArchive webArchive = ShrinkWrap.createFromZipFile(WebArchive.class, war);
+
+        String[] webResources = getTestWebResources();
+        for (String webResource : webResources) {
+            File res = new File(webResource);
+            webArchive.addAsWebResource(res);
+        }
+
+        System.out.println(webArchive.toString(true));
+        return webArchive;
+
     }
+
+    private static String[] getTestWebResources() {
+
+        return new String[]{
+                resName("todoList-spec.js"),
+                resName("runner.html"),
+                resName("angular-scenario.js")
+        };
+    }
+
+    private static final String TEST_RESOURCE_PREFIX = "src/test/webapp/";
+    private static String resName(String fileName) {
+        return TEST_RESOURCE_PREFIX + fileName;
+    }
+
 
     @Test
     public void runE2ETest() {
         WebDriver driver = new FirefoxDriver();
 
-        driver.get("http://localhost:8180/replaceme-war-1.0-SNAPSHOT-e2etest/runner.html");
+        driver.get("http://localhost:8180/replaceme-war-1.0-SNAPSHOT/runner.html");
 
         ExpectedCondition e = new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {

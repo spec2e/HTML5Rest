@@ -30,49 +30,6 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <webResources>
-                        <resource>
-                            <directory>src/main/webapp</directory>
-                            <filtering>true</filtering>
-                            <includes>
-                                <include>**/jboss-web.xml</include>
-                            </includes>
-                        </resource>
-                    </webResources>
-                </configuration>
-
-                <executions>
-                    <execution>
-                        <id>e2etest</id>
-
-                        <configuration>
-                            <classifier>e2etest</classifier>
-                            <webappDirectory>${project.build.directory}/${project.build.finalName}-e2etest</webappDirectory>
-                            <webResources>
-                                <resource>
-                                    <directory>src/main/webapp</directory>
-                                    <filtering>true</filtering>
-                                    <includes>
-                                        <include>**/jboss-web.xml</include>
-                                    </includes>
-                                </resource>
-
-                                <resource>
-                                    <directory>src/test/webapp</directory>
-                                </resource>
-                            </webResources>
-                        </configuration>
-                        <goals>
-                            <goal>war</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
 
             <!--  Ensures we are compiling at 1.6 level -->
             <plugin>
