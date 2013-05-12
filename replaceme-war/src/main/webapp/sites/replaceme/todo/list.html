@@ -4,7 +4,8 @@
     <table>
         <tr>
             <td><input type="text" ng-model="query" /></td>
-            <td><input type="text" ui-date ui-date-format="DD, d MM, yy" ng-model="date"  /></td>
+            <td><input type="text" ui-date="datepickerOptions" ui-date-format="dd-mm-yy" ng-model="myDate"  /></td>
+            <td>{{myDate}}</td>
         </tr>
     </table>
 

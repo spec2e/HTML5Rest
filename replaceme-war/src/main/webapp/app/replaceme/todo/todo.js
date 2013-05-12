@@ -18,7 +18,14 @@ replaceme.todo.ListController = function($scope, $routeParams, $resource, todoSe
     //Declare the query model field - just for clarity...
     $scope.query = '';
 
-    $scope.date = '';
+    $scope.datepickerOptions = {
+        changeYear: true,
+        changeMonth: true,
+        yearRange: '1900:-0',
+        dateFormat: 'dd-mm-yy'
+    };
+
+    $scope.myDate = undefined;
 
 };
 
