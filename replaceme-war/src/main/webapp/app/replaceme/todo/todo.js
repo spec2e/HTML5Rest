@@ -13,6 +13,15 @@ replaceme.todo.CreateController = function($scope, $routeParams, $resource, todo
     }
 };
 
+replaceme.todo.ListController = function($scope, $routeParams, $resource, todoService) {
+
+    //Declare the query model field - just for clarity...
+    $scope.query = '';
+
+    $scope.date = '';
+
+};
+
 replaceme.todo.Tab1Controller = function($scope, $routeParams, $resource, todoService) {
 
     $scope.toggleEditSubject = function(index, $event) {

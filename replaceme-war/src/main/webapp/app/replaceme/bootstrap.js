@@ -1,6 +1,6 @@
 namespace('replaceme');
 
-var replacemeModule = angular.module('ReplaceMe', ['ui.bootstrap', 'ngResource']);
+var replacemeModule = angular.module('ReplaceMe', ['ui.bootstrap', 'ngResource', 'ui.date']);
 
 //Base REST URL for the entire data layer
 replaceme.REST_BASE_URL = 'rest/';
