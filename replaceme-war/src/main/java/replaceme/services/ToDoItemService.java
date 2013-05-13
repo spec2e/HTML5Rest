@@ -21,7 +21,7 @@ public class ToDoItemService extends CRUDService<ToDoItem> {
     private static Map<String, ToDoItem> todos = ToDoItemDummyListFactory.createToDosDummyMap();
 
     //The same for ID
-    private int counter = 10;
+    private static int counter = 10;
 
     @Override
     @Path("/create")
