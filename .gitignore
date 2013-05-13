@@ -1,17 +1,15 @@
-.idea
-*.iml
 
-*.class
+*/*.class
 
 # Package Files #
 *.jar
 *.war
 *.ear
 
-replaceme-war/target
-replaceme-war/.idea
-replaceme-war/*.iml
+*/.settings
+*/.classpath
+*/.project
 
-replaceme-e2e-test/*.iml
-replaceme-e2e-test/target/
-replaceme-war/.idea
+*/target
+*/.idea
+*/*.iml
