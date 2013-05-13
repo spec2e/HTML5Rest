@@ -23,7 +23,7 @@
                     </thead>
                     <tr ng-repeat="todo in todoList | filter:query">
                         <td>
-                            <p ng-click="toggleEditSubject($index, $event)"
+                            <p ng-click="toggleEditSubject($index, $event)" style="cursor:pointer;"
                                ng-show="!isSubjectEditing($index)"
                                ng-hide="isSubjectEditing($index)">
                                 {{todo.subject}}
