@@ -32,7 +32,7 @@ describe('replaceme', function() {
 
 
         it('should go to the list page, when the list link is clicked', function() {
-            expect(element('#list-link').click());
+            expect(element('#todo-list').click());
             expect(browser().location().url()).toEqual('/todo/list');
         });
 
