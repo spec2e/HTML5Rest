@@ -34,7 +34,8 @@ replaceme.todo.Tab1Controller = function($scope, $routeParams, $resource, todoSe
     $scope.toggleEditSubject = function(index, $event) {
 
         if($scope.selectedIndex === index) {
-        	todoService.update($scope.todoList[index], function(todo) {        		
+        	todoService.update($scope.todoList[index], function(todo) {      
+        		console.log("updating...");
         		$scope.addSuccessMessage("ToDo was updated :-)");
         	});
             

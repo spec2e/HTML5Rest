@@ -27,12 +27,14 @@ replacemeModule.run(function($rootScope, $location) {
     $rootScope.alertsViewed = false;
 
     $rootScope.addSuccessMessage = function(msg) {
+    	$rootScope.alerts = [];
         var alert = { type: 'success', msg: msg };
         $rootScope.alerts.push(alert);
         $rootScope.alertsViewed = false;
     };
 
     $rootScope.addErrorMessage = function(msg) {
+    	$rootScope.alerts = [];
         var alert = { type: 'error', msg: msg };
         $rootScope.alerts.push(alert);
         $rootScope.alertsViewed = false;
