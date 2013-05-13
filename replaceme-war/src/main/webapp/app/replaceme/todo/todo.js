@@ -32,11 +32,15 @@ replaceme.todo.ListController = function($scope, $routeParams, $resource, todoSe
 replaceme.todo.Tab1Controller = function($scope, $routeParams, $resource, todoService) {
 
     $scope.toggleEditSubject = function(index, $event) {
-        //var element = angular.element($event.target);
-        //log("id: " + element.attr('id'));
+
         if($scope.selectedIndex === index) {
-            //Reset the selectedIndex variable
+        	todoService.update($scope.todoList[index], function(todo) {        		
+        		$scope.addSuccessMessage("ToDo was updated :-)");
+        	});
+            
+        	//Reset the selectedIndex variable
             $scope.selectedIndex = -1;
+            
         } else {
             $scope.selectedIndex = index;
         }

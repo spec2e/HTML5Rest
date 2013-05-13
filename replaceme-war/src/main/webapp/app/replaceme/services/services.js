@@ -3,7 +3,7 @@ namespace('replaceme.services');
 replaceme.services.ToDoService = function ($resource, $routeParams) {
 
     var REST_CREATE_URL = replaceme.REST_BASE_URL + 'ToDo/create';
-    var REST_READ_URL = replaceme.REST_BASE_URL + 'ToDo/read/:id'
+    var REST_READ_URL = replaceme.REST_BASE_URL + 'ToDo/read/:id';
     var REST_LIST_URL = replaceme.REST_BASE_URL + 'ToDo/all';
     var REST_UPDATE_URL = replaceme.REST_BASE_URL + 'ToDo/update';
 
@@ -65,7 +65,7 @@ replaceme.services.ToDoService = function ($resource, $routeParams) {
         proxy.$save(function (data) {
             var todo = new replaceme.model.ToDo(data);
             currentTodo = todo;
-            callback(todo)
+            callback(todo);
         });
     };
 
