@@ -17,9 +17,10 @@ import java.util.Map;
 @Path("/ToDo")
 public class ToDoItemService extends CRUDService<ToDoItem> {
 
+	//Just to provide a quick CRUD store...
+    private static Map<String, ToDoItem> todos = ToDoItemDummyListFactory.createToDosDummyMap();
 
-    private Map<String, ToDoItem> todos = ToDoItemDummyListFactory.createToDosDummyMap();
-
+    //The same for ID
     private int counter = 10;
 
     @Override
@@ -28,10 +29,9 @@ public class ToDoItemService extends CRUDService<ToDoItem> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @ValidateRequest
-    public ToDoItem create(@Valid ToDoItem resource) {
-        System.out.println("ToDoItemService.create");
+    public ToDoItem create(@Valid ToDoItem resource) {        
         resource.setId(counter + "");
-        counter++;
+        counter++;        
         todos.put(resource.getId(), resource);
         return resource;
     }

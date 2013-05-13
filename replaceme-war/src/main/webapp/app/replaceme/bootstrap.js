@@ -42,8 +42,6 @@ replacemeModule.run(function($rootScope, $location) {
         $rootScope.alerts.splice(index, 1);
     };
 
-    $rootScope.selected = '';
-
     //Reset the alerts...
     $rootScope.$on('$routeChangeSuccess', function (scope, next, current) {
         if($rootScope.alertsViewed === true) {
@@ -52,8 +50,8 @@ replacemeModule.run(function($rootScope, $location) {
             $rootScope.alertsViewed = true;
         }
     });
-
-
+      
+    
 });
 
 
@@ -75,7 +73,7 @@ replacemeModule.directive('ngBlur', ['$parse', function($parse) {
                 fn(scope, {$event:event});
             });
         });
-    }
+    };
 }]);
 
 replacemeModule.directive('ngFocus', function( $timeout ) {
@@ -89,5 +87,28 @@ replacemeModule.directive('ngFocus', function( $timeout ) {
         });
     };
 });
+
+replacemeModule.directive('menuSelected', ['$location', function($location) {
+    return function(scope, element, attr) {
+    	//If the route changes we should probably also change the selected menu item...
+    	scope.$on('$routeChangeSuccess', function (scope, next, current) {
+    		var url = $location.url();
+    		//Take the link that is insiede the <li> element
+    		var nestedLink = angular.element(element.children()[0]);
+    		if(nestedLink) {
+    			var menuUrl = nestedLink.attr('href');
+    			if(!menuUrl) {
+    				throw 'menuSelected: Could not find anchor tag! There must be a <a href...> tag inside the <li menu-selected...> tag.';
+    			}
+        		if(menuUrl.indexOf(url) > 0) {
+        			element.addClass('active');
+        		} else {
+        			element.removeClass('active');
+        		}	
+    		}
+    			
+    	});	
+    };
+}]);
 
 

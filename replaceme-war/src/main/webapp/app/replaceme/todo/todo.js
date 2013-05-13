@@ -1,7 +1,7 @@
 namespace('replaceme.todo');
 
 replaceme.todo.CreateController = function($scope, $routeParams, $resource, todoService) {
-
+	
     $scope.todo = new replaceme.model.ToDo();
 
     $scope.create = function () {
@@ -10,7 +10,7 @@ replaceme.todo.CreateController = function($scope, $routeParams, $resource, todo
             $scope.addSuccessMessage("ToDo was created");
             $scope.go('/todo/list');
         });
-    }
+    };
 };
 
 replaceme.todo.ListController = function($scope, $routeParams, $resource, todoService) {
