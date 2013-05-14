@@ -1,23 +1,25 @@
 package filters;
 
-import java.io.IOException;
-import java.net.URLDecoder;
+import replaceme.SessionContext;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.inject.Inject;
+import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.net.URLDecoder;
+
 
 @WebFilter("/rest/secured/*")
 public class AuthenticateFilter implements Filter {
 
-    private static final String AUTHENTICATION = "Authentication";
+    public static final String AUTHENTICATION = "Authentication";
+
+    @Inject
+    SessionContext sessionContext;
 
     @Override
     public void destroy() {
@@ -36,8 +38,9 @@ public class AuthenticateFilter implements Filter {
                 String cookieName = cookie.getName();
                 if (cookieName.equals(AUTHENTICATION)) {
                     String authToken = URLDecoder.decode(cookie.getValue(), "UTF-8");
-                    System.out.println("cookieName: " + cookie.getName() + ", cookieValue: " + authToken);
-                    if (authTokenIsValid(authToken)) {
+                    String cleanedAuthToken = authToken.substring(1, authToken.length() -1);
+                    String sessionAuthToken = sessionContext.getAuthToken();
+                    if (authTokenIsValid(cleanedAuthToken, sessionAuthToken)) {
                         isAuthenticated = true;
                         chain.doFilter(req, resp);
                     }
@@ -51,8 +54,10 @@ public class AuthenticateFilter implements Filter {
         }
     }
 
-    private boolean authTokenIsValid(String authenticationToken) {
-        return true;
+    private boolean authTokenIsValid(String authenticationToken, String sessionAuthToken) {
+
+        return authenticationToken.equals(sessionAuthToken);
+
     }
 
     @Override

@@ -15,7 +15,7 @@ replaceme.login.LoginController = function($scope, $http, todoService) {
         $http.post('rest/Login/login/' + $scope.userName + "/" + $scope.password, postData).
             success(function(data, status, headers, config) {
 				console.log('success: status is: ' + status + ", cookie is: " + headers('Authentication'));
-
+                $scope.go("/todo/list");
 				
 			}).error(function(data, status, headers, config) {
 				console.log('error: status is: ' + status);

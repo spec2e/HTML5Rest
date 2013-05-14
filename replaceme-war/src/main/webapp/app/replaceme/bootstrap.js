@@ -28,7 +28,7 @@ replaceme.setupRoutes = function ($routepProvider) {
         otherwise({redirectTo: '/home'});
 };
 
-replacemeModule.run(function ($rootScope, $location, errorService) {
+replacemeModule.run(function ($rootScope, $location, errorService, $http, $cookieStore) {
 
     $rootScope.errorService = errorService;
 
@@ -76,6 +76,18 @@ replacemeModule.run(function ($rootScope, $location, errorService) {
         }
     });
 
+    $rootScope.logout = function () {
+        $http.post('rest/Login/logout/').
+            success(function (data, status, headers, config) {
+                console.log("logged out!");
+                $cookieStore.put(replaceme.AUTHENTICATION_COOKIE, '');
+                $rootScope.go("/home")
+            }).error(function (data, status, headers, config) {
+                console.log("logged out!");
+                $cookieStore.put(replaceme.AUTHENTICATION_COOKIE, '');
+            });
+    };
+
 });
 
 
@@ -107,28 +119,28 @@ replacemeModule.directive('ngFocus', function ($timeout) {
 });
 
 replacemeModule.directive('menuSelected', ['$location', function ($location) {
-            return function (scope, element, attr) {
-                // If the route changes we should probably also
-                // change the selected menu item...
-                scope.$on(
-                    '$routeChangeSuccess',
-                    function (scope, next, current) {
-                        var url = $location.url();
-                        // Take the link that is
-                        // insiede the <li> element
-                        var nestedLink = angular.element(element.children()[0]);
-                        if (nestedLink) {
-                            var menuUrl = nestedLink.attr('href');
-                            if (!menuUrl) {
-                                throw 'menuSelected: Could not find anchor tag! There must be a <a href...> tag inside the <li menu-selected...> tag.';
-                            }
-                            if (menuUrl.indexOf(url) > 0) {
-                                element.addClass('active');
-                            } else {
-                                element.removeClass('active');
-                            }
-                        }
+    return function (scope, element, attr) {
+        // If the route changes we should probably also
+        // change the selected menu item...
+        scope.$on(
+            '$routeChangeSuccess',
+            function (scope, next, current) {
+                var url = $location.url();
+                // Take the link that is
+                // insiede the <li> element
+                var nestedLink = angular.element(element.children()[0]);
+                if (nestedLink) {
+                    var menuUrl = nestedLink.attr('href');
+                    if (!menuUrl) {
+                        throw 'menuSelected: Could not find anchor tag! There must be a <a href...> tag inside the <li menu-selected...> tag.';
+                    }
+                    if (menuUrl.indexOf(url) > 0) {
+                        element.addClass('active');
+                    } else {
+                        element.removeClass('active');
+                    }
+                }
 
-                    });
-            };
-        } ]);
+            });
+    };
+} ]);

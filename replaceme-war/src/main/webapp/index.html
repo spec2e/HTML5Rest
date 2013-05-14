@@ -45,18 +45,37 @@
                 <span class="icon-bar"></span> <span class="icon-bar"></span> <span
                     class="icon-bar"></span>
             </button>
-            <a class="brand" href="#" >Replaceme</a>
+            <a class="brand" href="#">Replaceme</a>
 
             <div class="nav-collapse collapse">
                 <ul class="nav">
-                    <li menu-selected >                    	
-                    	<a id="create-todo" href="#/todo/create" >Create ToDo</a>
+                    <li menu-selected>
+                        <a id="create-todo" href="#/todo/create">Create ToDo</a>
                     </li>
-                    <li menu-selected >
-                    	<a id="todo-list" href="#/todo/list">List ToDo's</a>
+                    <li menu-selected>
+                        <a id="todo-list" href="#/todo/list">List ToDo's</a>
                     </li>
                 </ul>
             </div>
+            <div class="nav-collapse collapse" style="float:right;">
+                <ul class="nav">
+                    <li menu-selected>
+                        <a id="logout-todo" href="#" ng-click="logout()">Logout</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--
+            <div class="span2 offset6">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse"
+                        data-target=".nav-collapse">
+                    <span class="icon-bar"></span> <span class="icon-bar"></span> <span
+                        class="icon-bar"></span>
+                </button>
+                <a class="brand" href="#">Logout</a>
+            </div>
+
+            -->
         </div>
     </div>
 </div>
@@ -65,23 +84,22 @@
 <div style="height: 42px"></div>
 
 
-
 <!-- This is where the pages will run -->
 <div class="container">
 
-	<div ng-show="errorService.errorMessage">
-		<alert type="'error'" close="errorService.clear()">{{errorService.errorMessage}}</alert>
-	</div>	
-	
+    <div ng-show="errorService.errorMessage">
+        <alert type="'error'" close="errorService.clear()">{{errorService.errorMessage}}</alert>
+    </div>
+
 
     <div ng-show="alerts.length > 0">
         <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
     </div>
 
     <div ng-view></div>
-    
+
     <hr>
-	
+
     <footer class="span9">
         <p class="text-center">&copy; MyCompany 2013</p>
     </footer>

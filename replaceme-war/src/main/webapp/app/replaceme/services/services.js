@@ -29,8 +29,7 @@ replacemeModule.factory('errorHttpInterceptor', function ($q, $location, errorSe
 
                 if(response.headers(replaceme.AUTHENTICATION_COOKIE)) {
                     var authToken = response.headers(replaceme.AUTHENTICATION_COOKIE);
-                    console.log("authToken: " + authToken);
-                    $cookieStore.put('Authentication', authToken);
+                    $cookieStore.put(replaceme.AUTHENTICATION_COOKIE, authToken);
                 }
 
                 return response;
