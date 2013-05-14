@@ -1,6 +1,7 @@
 package filters;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -25,33 +26,33 @@ public class AuthenticateFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
 
-	HttpServletRequest httpReq = (HttpServletRequest) req;
+        HttpServletRequest httpReq = (HttpServletRequest) req;
 
-	boolean isAuthenticated = false;
+        boolean isAuthenticated = false;
 
-	Cookie[] cookies = httpReq.getCookies();
-	if (cookies != null) {
-	    for (Cookie cookie : cookies) {
-		String cookieName = cookie.getName();
-		if (cookieName.equals(AUTHENTICATION)) {
-		    String authToken = cookie.getValue();
-		    System.out.println("cookieName: " + cookie.getName() + ", cookieValue: " + authToken);
-		    if (authTokenIsValid(authToken)) {
-			isAuthenticated = true;
-			chain.doFilter(req, resp);
-		    }
-		}
-	    }
-	}
+        Cookie[] cookies = httpReq.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                String cookieName = cookie.getName();
+                if (cookieName.equals(AUTHENTICATION)) {
+                    String authToken = URLDecoder.decode(cookie.getValue(), "UTF-8");
+                    System.out.println("cookieName: " + cookie.getName() + ", cookieValue: " + authToken);
+                    if (authTokenIsValid(authToken)) {
+                        isAuthenticated = true;
+                        chain.doFilter(req, resp);
+                    }
+                }
+            }
+        }
 
-	if (!isAuthenticated) {
-	    HttpServletResponse httpResp = (HttpServletResponse) resp;
-	    httpResp.setStatus(401);
-	}
+        if (!isAuthenticated) {
+            HttpServletResponse httpResp = (HttpServletResponse) resp;
+            httpResp.setStatus(401);
+        }
     }
 
     private boolean authTokenIsValid(String authenticationToken) {
-	return true;
+        return true;
     }
 
     @Override

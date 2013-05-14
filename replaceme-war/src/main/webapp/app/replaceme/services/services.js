@@ -1,87 +1,96 @@
 namespace('replaceme.services');
 
-replacemeModule.factory('errorService', function() {
+replacemeModule.factory('errorService', function () {
 
-	var errorMessage, setError, clear;
+    var errorMessage, setError, clear;
 
-	setError = function(msg) {
-		console.log("errorService.setError");
-		this.errorMessage = msg;
-	};
+    setError = function (msg) {
+        console.log("errorService.setError");
+        this.errorMessage = msg;
+    };
 
-	clear = function() {
-		this.errorMessage = null;
-	};
+    clear = function () {
+        this.errorMessage = null;
+    };
 
-	return {
-		errorMessage : errorMessage,
-		setError : setError,
-		clear : clear
-	};
+    return {
+        errorMessage: errorMessage,
+        setError: setError,
+        clear: clear
+    };
 
 });
 
-replacemeModule.factory('errorHttpInterceptor',	function($q, $location, errorService, $rootScope) {
-			return function(promise) {
-				return promise.then(
-						function(response) {
-							return response;
-						},
-						function(response) {
-							if (response.status === 401) {
-								$rootScope.$broadcast('event:loginRequired');
-							} else if (response.status >= 400 && response.status < 500) {
-								errorService.setError("Could not find the service you were looking for!");
-							}
-							return $q.reject(response);
-						});
-			};
+replacemeModule.factory('errorHttpInterceptor', function ($q, $location, errorService, $rootScope, $cookieStore) {
+    return function (promise) {
+        return promise.then(
+            //Success...
+            function (response) {
+
+                if(response.headers(replaceme.AUTHENTICATION_COOKIE)) {
+                    var authToken = response.headers(replaceme.AUTHENTICATION_COOKIE);
+                    console.log("authToken: " + authToken);
+                    $cookieStore.put('Authentication', authToken);
+                }
+
+                return response;
+            },
+            //Error...
+            function (response) {
+                if (response.status === 401) {
+                    $rootScope.$broadcast('event:loginRequired');
+                } else if (response.status >= 400 && response.status < 500) {
+                    errorService.setError("Could not find the service you were looking for!");
+                }
+                return $q.reject(response);
+            });
+    };
 });
 
 
-replacemeModule.factory('Authentication', function() {
-	  return {
-		    getTokenType: function() {
-		      return 'Awesome';
-		    },
-		    getAccessToken: function() {
-		      // Fetch from the server in real life
-		      return 'asdads131321asdasdasdas';
-		    }
-	  };
+replacemeModule.factory('Authentication', function () {
+    return {
+        getTokenType: function () {
+            return 'Awesome';
+        },
+        getAccessToken: function () {
+            // Fetch from the server in real life
+            return 'asdads131321asdasdasdas';
+        }
+    };
 });
 
-replacemeModule.factory('authHttp', function($http, Authentication) {
-	var authHttp = {};
-	// Append the right header to the request
-	var extendHeaders = function(config) {
-		config.headers = config.headers || {};
-		config.headers['Authentication'] = Authentication.getTokenType() + ' '
-				+ Authentication.getAccessToken();
-	};
-	// Do this for each $http call
-	angular.forEach([ 'get', 'delete', 'head', 'jsonp' ], function(name) {
-		authHttp[name] = function(url, config) {
-			config = config || {};
-			extendHeaders(config);
-			return $http[name](url, config);
-		};
-	});
-	angular.forEach([ 'post', 'put' ], function(name) {
-		authHttp[name] = function(url, data, config) {
-			config = config || {};
-			extendHeaders(config);
-			return $http[name](url, data, config);
-		};
-	});
-	return authHttp;
+replacemeModule.factory('authHttp', function ($http, Authentication) {
+    var authHttp = {};
+    // Append the right header to the request
+    var extendHeaders = function (config) {
+        config.headers = config.headers || {};
+        config.headers['Authentication'] = Authentication.getTokenType() + ' '
+            + Authentication.getAccessToken();
+    };
+    // Do this for each $http call
+    angular.forEach([ 'get', 'delete', 'head', 'jsonp' ], function (name) {
+        authHttp[name] = function (url, config) {
+            config = config || {};
+            extendHeaders(config);
+            return $http[name](url, config);
+        };
+    });
+    angular.forEach([ 'post', 'put' ], function (name) {
+        authHttp[name] = function (url, data, config) {
+            config = config || {};
+            extendHeaders(config);
+            return $http[name](url, data, config);
+        };
+    });
+    return authHttp;
 });
 
 // Register the countryService...
 replacemeModule.factory('todoService', [ '$resource', '$routeParams',
-		function($resource, $routeParams) {
-			return replaceme.services.ToDoService($resource, $routeParams);
-		} ]);
+    function ($resource, $routeParams) {
+        return replaceme.services.ToDoService($resource, $routeParams);
+    } ]);
 
 
 replaceme.services.ToDoService = function ($resource, $routeParams) {
