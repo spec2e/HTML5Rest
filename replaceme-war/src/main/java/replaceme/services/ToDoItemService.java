@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Path("/ToDo")
+@Path("/secured/ToDo")
 public class ToDoItemService extends CRUDService<ToDoItem> {
 
 	//Just to provide a quick CRUD store...
