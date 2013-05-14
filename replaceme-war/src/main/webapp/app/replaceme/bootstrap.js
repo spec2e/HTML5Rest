@@ -1,116 +1,230 @@
 namespace('replaceme');
 
-var replacemeModule = angular.module('ReplaceMe', ['ui.bootstrap', 'ngResource', 'ui.date']);
+var replacemeModule = angular.module('ReplaceMe', [ 'ui.bootstrap',
+		'ngResource', 'ui.date' ]);
 
-//Base REST URL for the entire data layer
+// Base REST URL for the entire data layer
 replaceme.REST_BASE_URL = 'rest/';
 
-//Set up routes for the customer site
-replacemeModule.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.
-        when('/home', {templateUrl: 'sites/replaceme/home/home.html', controller: replaceme.home.HomeController}).
-        when('/todo/create', {templateUrl: 'sites/replaceme/todo/create.html', controller: replaceme.todo.CreateController}).
-        when('/todo/show/:id', {templateUrl: 'sites/replaceme/todo/show.html', controller: replaceme.todo.ShowController}).
-        when('/todo/update/:id', {templateUrl: 'sites/replaceme/todo/update.html', controller: replaceme.todo.UpdateController}).
-        //when('/todo/list', {templateUrl: 'sites/replaceme/todo/list.html', controller: replaceme.todo.ListController}).
-        when('/todo/list', {templateUrl: 'sites/replaceme/todo/list.html'}).
-        otherwise({redirectTo: '/home'});
-}]);
+// Set up routes for the customer site
+replacemeModule.config([ '$routeProvider', '$httpProvider',
+		function($routeProvider, $httpProvider) {
+			replaceme.setupRoutes($routeProvider);
 
-replacemeModule.run(function($rootScope, $location) {
+			$httpProvider.responseInterceptors.push('errorHttpInterceptor');
 
-    $rootScope.go = function(path) {
-        $location.url(path);
-    };
+		} ]);
 
-    $rootScope.alerts = [];
-    $rootScope.alertsViewed = false;
+replaceme.setupRoutes = function($routepProvider) {
+	
+	
+	// when('/login', {templateUrl: 'sites/replaceme/login/login.html',
+	// controller: replaceme.login.LoginController}),
+	$routepProvider.
+		when('/login', {templateUrl : 'sites/replaceme/login/login.html', controller : replaceme.login.LoginController}).
+		when('/home', {templateUrl : 'sites/replaceme/home/home.html', controller : replaceme.home.HomeController}).
+		when('/todo/create', {templateUrl : 'sites/replaceme/todo/create.html',	controller : replaceme.todo.CreateController}).
+		when('/todo/show/:id', {templateUrl : 'sites/replaceme/todo/show.html',	controller : replaceme.todo.ShowController}).
+		when('/todo/update/:id', {templateUrl : 'sites/replaceme/todo/update.html',	controller : replaceme.todo.UpdateController}).
+		when('/todo/list', {templateUrl : 'sites/replaceme/todo/list.html'}).
+		otherwise({redirectTo : '/home'});
+};
 
-    $rootScope.addSuccessMessage = function(msg) {
-    	$rootScope.alerts = [];
-        var alert = { type: 'success', msg: msg };
-        $rootScope.alerts.push(alert);
-        $rootScope.alertsViewed = false;
-    };
+replacemeModule.run(function($rootScope, $location, errorService) {
 
-    $rootScope.addErrorMessage = function(msg) {
-    	$rootScope.alerts = [];
-        var alert = { type: 'error', msg: msg };
-        $rootScope.alerts.push(alert);
-        $rootScope.alertsViewed = false;
-    };
+	$rootScope.errorService = errorService;
 
-    $rootScope.closeAlert = function(index) {
-        $rootScope.alerts.splice(index, 1);
-    };
+	$rootScope.go = function(path) {
+		$location.path(path);
+	};
 
-    //Reset the alerts...
-    $rootScope.$on('$routeChangeSuccess', function (scope, next, current) {
-        if($rootScope.alertsViewed === true) {
-            $rootScope.alerts = [];
-        } else {
-            $rootScope.alertsViewed = true;
-        }
-    });
-      
-    
+	$rootScope.$on('event:loginRequired', function() {
+		go('/login');
+	});
+
+	$rootScope.alerts = [];
+	$rootScope.alertsViewed = false;
+
+	$rootScope.addSuccessMessage = function(msg) {
+		$rootScope.alerts = [];
+		var alert = {
+			type : 'success',
+			msg : msg
+		};
+		$rootScope.alerts.push(alert);
+		$rootScope.alertsViewed = false;
+	};
+
+	$rootScope.addErrorMessage = function(msg) {
+		$rootScope.alerts = [];
+		var alert = {
+			type : 'error',
+			msg : msg
+		};
+		$rootScope.alerts.push(alert);
+		$rootScope.alertsViewed = false;
+	};
+
+	$rootScope.closeAlert = function(index) {
+		$rootScope.alerts.splice(index, 1);
+	};
+
+	// Reset the alerts...
+	$rootScope.$on('$routeChangeSuccess', function(scope, next, current) {
+		if ($rootScope.alertsViewed === true) {
+			$rootScope.alerts = [];
+		} else {
+			$rootScope.alertsViewed = true;
+		}
+	});
+
+});
+
+replacemeModule.factory('errorService', function() {
+
+	var errorMessage, setError, clear;
+
+	setError = function(msg) {
+		console.log("errorService.setError");
+		this.errorMessage = msg;
+	};
+
+	clear = function() {
+		this.errorMessage = null;
+	};
+
+	return {
+		errorMessage : errorMessage,
+		setError : setError,
+		clear : clear
+	};
+
+});
+
+replacemeModule.factory('errorHttpInterceptor',	function($q, $location, errorService, $rootScope) {
+			return function(promise) {
+				return promise.then(
+						function(response) {
+							return response;
+						},
+						function(response) {
+							if (response.status === 401) {
+								$rootScope.$broadcast('event:loginRequired');
+							} else if (reponse.status >= 400
+									&& reponse.status < 500) {
+								errorService
+										.setError("Could not find the service you were looking for!");
+							}
+							return $q.reject(response);
+						});
+			};
 });
 
 
-//Register the countryService...
-replacemeModule.factory('todoService', ['$resource', '$routeParams',
-    function ($resource, $routeParams) {
-        return replaceme.services.ToDoService($resource, $routeParams);
-    }
-]);
-
-
-//ngBlur directive
-
-replacemeModule.directive('ngBlur', ['$parse', function($parse) {
-    return function(scope, element, attr) {
-        var fn = $parse(attr['ngBlur']);
-        element.bind('blur', function(event) {
-            scope.$apply(function() {
-                fn(scope, {$event:event});
-            });
-        });
-    };
-}]);
-
-replacemeModule.directive('ngFocus', function( $timeout ) {
-    return function( scope, elem, attrs ) {
-        scope.$watch(attrs.ngFocus, function( newval ) {
-            if ( newval ) {
-                $timeout(function() {
-                    elem[0].focus();
-                }, 0, false);
-            }
-        });
-    };
+replacemeModule.factory('Authentication', function() {
+	  return {
+		    getTokenType: function() {
+		      return 'Awesome';
+		    },
+		    getAccessToken: function() {
+		      // Fetch from the server in real life
+		      return 'asdads131321asdasdasdas';
+		    }
+	  };
 });
 
-replacemeModule.directive('menuSelected', ['$location', function($location) {
-    return function(scope, element, attr) {
-    	//If the route changes we should probably also change the selected menu item...
-    	scope.$on('$routeChangeSuccess', function (scope, next, current) {
-    		var url = $location.url();
-    		//Take the link that is insiede the <li> element
-    		var nestedLink = angular.element(element.children()[0]);
-    		if(nestedLink) {
-    			var menuUrl = nestedLink.attr('href');
-    			if(!menuUrl) {
-    				throw 'menuSelected: Could not find anchor tag! There must be a <a href...> tag inside the <li menu-selected...> tag.';
-    			}
-        		if(menuUrl.indexOf(url) > 0) {
-        			element.addClass('active');
-        		} else {
-        			element.removeClass('active');
-        		}	
-    		}
-    			
-    	});	
-    };
-}]);
+replacemeModule.factory('authHttp', function($http, Authentication) {
+	var authHttp = {};
+	// Append the right header to the request
+	var extendHeaders = function(config) {
+		config.headers = config.headers || {};
+		config.headers['Authorization'] = Authentication.getTokenType() + ' '
+				+ Authentication.getAccessToken();
+	};
+	// Do this for each $http call
+	angular.forEach([ 'get', 'delete', 'head', 'jsonp' ], function(name) {
+		authHttp[name] = function(url, config) {
+			config = config || {};
+			extendHeaders(config);
+			return $http[name](url, config);
+		};
+	});
+	angular.forEach([ 'post', 'put' ], function(name) {
+		authHttp[name] = function(url, data, config) {
+			config = config || {};
+			extendHeaders(config);
+			return $http[name](url, data, config);
+		};
+	});
+	return authHttp;
+});
 
+// Register the countryService...
+replacemeModule.factory('todoService', [ '$resource', '$routeParams',
+		function($resource, $routeParams) {
+			return replaceme.services.ToDoService($resource, $routeParams);
+		} ]);
 
+// ngBlur directive
+
+replacemeModule.directive('ngBlur', [ '$parse', function($parse) {
+	return function(scope, element, attr) {
+		var fn = $parse(attr['ngBlur']);
+		element.bind('blur', function(event) {
+			scope.$apply(function() {
+				fn(scope, {
+					$event : event
+				});
+			});
+		});
+	};
+} ]);
+
+replacemeModule.directive('ngFocus', function($timeout) {
+	return function(scope, elem, attrs) {
+		scope.$watch(attrs.ngFocus, function(newval) {
+			if (newval) {
+				$timeout(function() {
+					elem[0].focus();
+				}, 0, false);
+			}
+		});
+	};
+});
+
+replacemeModule.directive(
+	'menuSelected',
+	[
+			'$location',
+			function($location) {
+				return function(scope, element, attr) {
+					// If the route changes we should probably also
+					// change the selected menu item...
+					scope.$on(
+						'$routeChangeSuccess',
+						function(scope, next, current) {
+							var url = $location.url();
+							// Take the link that is
+							// insiede the <li> element
+							var nestedLink = angular
+									.element(element
+											.children()[0]);
+							if (nestedLink) {
+								var menuUrl = nestedLink
+										.attr('href');
+								if (!menuUrl) {
+									throw 'menuSelected: Could not find anchor tag! There must be a <a href...> tag inside the <li menu-selected...> tag.';
+								}
+								if (menuUrl
+										.indexOf(url) > 0) {
+									element
+											.addClass('active');
+								} else {
+									element
+											.removeClass('active');
+								}
+							}
+
+						});
+				};
+			} ]);
