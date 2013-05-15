@@ -78,12 +78,12 @@
 <div class="container">
 
     <div ng-show="alertService.errorMessage">
-        <alert type="'error'" close="alertService.clearError()">{{alertService.errorMessage}}</alert>
+        <alert type="'error'" close="alertService.errorMessage=null">{{alertService.errorMessage}}</alert>
     </div>
 
 
-    <div ng-show="alertService.message">
-        <alert type="success" close="alertService.clearSuccess()">{{alertService.message}}</alert>
+    <div ng-show="alertService.successMessage">
+        <alert type="'success'" close="alertService.successMessage=null">{{alertService.successMessage}}</alert>
     </div>
 
     <div ng-view></div>

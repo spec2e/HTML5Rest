@@ -1,21 +1,12 @@
 namespace('replaceme.login');
 
-replaceme.login.LoginController = function($scope, $http, todoService) {
-	
-	$scope.userName;
-	$scope.password;
-	
+replaceme.login.LoginController = function($scope, $http, $location) {
+
 	$scope.login = function() {
 
-		var postData = {
-				userName: $scope.userName,
-				password: $scope.password
-		};
-
-        $http.post('rest/Login/login/' + $scope.userName + "/" + $scope.password, postData).
+        $http.post('rest/Login/login/' + $scope.userName + "/" + $scope.password).
             success(function(data, status, headers, config) {
-				console.log('success: status is: ' + status + ", cookie is: " + headers('Authentication'));
-                $scope.go("/todo/list");
+                $location.path('/todo/list');
 				
 			}).error(function(data, status, headers, config) {
 				console.log('error: status is: ' + status);

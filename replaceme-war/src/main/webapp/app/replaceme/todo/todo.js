@@ -1,14 +1,14 @@
 namespace('replaceme.todo');
 
-replaceme.todo.CreateController = function($scope, $routeParams, $resource, todoService) {
+replaceme.todo.CreateController = function($scope, $routeParams, $resource, todoService, alertService, $location) {
 	
     $scope.todo = new replaceme.model.ToDo();
 
     $scope.create = function () {
         var todoToCreate = $scope.todo;
         todoService.create(todoToCreate, function (todoToCreate) {
-            $scope.addSuccessMessage("ToDo was created");
-            $scope.go('/todo/list');
+            alertService.setSuccessMessage("ToDo was created");
+            $location.path('/todo/list');
         });
     };
 };
@@ -29,14 +29,14 @@ replaceme.todo.ListController = function($scope, $routeParams, $resource, todoSe
 
 };
 
-replaceme.todo.Tab1Controller = function($scope, $routeParams, $resource, todoService) {
+replaceme.todo.Tab1Controller = function($scope, $routeParams, $resource, todoService, alertService) {
 
     $scope.toggleEditSubject = function(index, $event) {
 
         if($scope.selectedIndex === index) {
         	todoService.update($scope.todoList[index], function(todo) {      
         		console.log("updating...");
-        		$scope.addSuccessMessage("ToDo was updated :-)");
+        		alertService.setSuccessMessage("ToDo was updated :-)");
         	});
             
         	//Reset the selectedIndex variable

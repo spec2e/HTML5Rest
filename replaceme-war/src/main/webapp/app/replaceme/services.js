@@ -1,38 +1,40 @@
 namespace('replaceme.services');
 
-replacemeModule.factory('alertService', function () {
+replacemeModule.factory('alertService', function ($timeout) {
 
-    var errorMessage, 
-        setError, 
-        clearError,
+    var errorMessage,
+        setErrorMessage,
         successMessage,
-        setSuccess,
-        clearSuccess;
+        setSuccessMessage;
 
-    setError = function (msg) {        
+    //'that' will be initialized an object, which is returned by this function
+    var that;
+
+    var setTimeOut = function() {
+        $timeout(function() {
+            that.errorMessage = null;
+            that.successMessage = null;
+        }, 3000, true);
+    };
+
+    setErrorMessage = function (msg) {
+        setTimeOut();
         this.errorMessage = msg;
     };
 
-    clearError = function () {
-        this.errorMessage = null;
-    };
-    
-    setSuccess = function(msg) {
+    setSuccessMessage = function(msg) {
+        setTimeOut();
     	this.successMessage = msg;
     };
-    
-    clearSuccess = function() {
-    	this.successMessage = null;
+
+    that = {
+        errorMessage: errorMessage,
+        setErrorMessage: setErrorMessage,
+        successMessage: successMessage,
+        setSuccessMessage: setSuccessMessage
     };
 
-    return {
-        errorMessage: errorMessage,
-        setError: setError,
-        clearError: clearError,
-        successMessage: successMessage,
-        setSuccess: setSuccess,
-        clearSuccess: clearSuccess
-    };
+    return that;
 
 });
 
@@ -54,7 +56,7 @@ replacemeModule.factory('errorHttpInterceptor', function ($q, $location, alertSe
                 if (response.status === 401) {
                     $rootScope.$broadcast('event:loginRequired');
                 } else if (response.status >= 400 && response.status < 500) {
-                	alertService.setError("Could not find the service you were looking for!");
+                	alertService.setErrorMessage("Could not find the service you were looking for!");
                 }
                 return $q.reject(response);
             });

@@ -42,22 +42,16 @@ replacemeModule.run(function ($rootScope, $location, alertService, $http, $cooki
     	$location.path('/login');
     });
 
-    // Reset the alerts...
-    $rootScope.$on('$routeChangeSuccess', function (scope, next, current) {
-        $rootScope.alertService.clearError();
-        $rootScope.alertService.clearSuccess();
-    });
-
     $rootScope.logout = function () {
         $http.post('rest/Login/logout/').
             success(function (data, status, headers, config) {
             	//Remove the authentication cookie
                 $cookieStore.put(replaceme.AUTHENTICATION_COOKIE, '');
-                $rootScope.go("/home")
+                $location.path("/home")
             }).error(function (data, status, headers, config) {
             	//Remove the authentication cookie anyway...
                 $cookieStore.put(replaceme.AUTHENTICATION_COOKIE, '');
-                $rootScope.go("/home")
+                $location.path("/home")
             });
     };
 
