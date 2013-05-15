@@ -1,17 +1,17 @@
 package replaceme.services;
 
-import filters.AuthenticateFilter;
-import replaceme.SessionContext;
+import java.net.URLEncoder;
+import java.util.UUID;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
+
+import filters.AuthenticateFilter;
+
+import replaceme.SessionContext;
 
 @Path("/Login")
 public class LoginService {
@@ -21,11 +21,15 @@ public class LoginService {
 
     @Path("/login/{user}/{pass}")
     @POST
-    public Response login(@PathParam(value = "user") String user, @PathParam(value = "pass") String pass) {
+    public Response login(@PathParam(value = "user") String user, @PathParam(value = "pass") String pass) throws Exception {
 
-        sessionContext.setAuthToken("1234");
-
-        return Response.status(200).header("Authentication", "1234").
+	//TODO: Find an algorithm to deliver security tokens. Tmporary solution is UUID.
+	UUID uuiId = UUID.randomUUID();
+	String token = uuiId.toString();
+	String encodedToken = URLEncoder.encode(token, "UTF-8");
+        sessionContext.setAuthToken(encodedToken);
+        return Response.status(200).
+        	header(AuthenticateFilter.AUTHENTICATION, encodedToken).
                 build();
     }
 

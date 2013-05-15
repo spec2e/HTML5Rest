@@ -1,27 +1,42 @@
 namespace('replaceme.services');
 
-replacemeModule.factory('errorService', function () {
+replacemeModule.factory('alertService', function () {
 
-    var errorMessage, setError, clear;
+    var errorMessage, 
+        setError, 
+        clearError,
+        successMessage,
+        setSuccess,
+        clearSuccess;
 
-    setError = function (msg) {
-        console.log("errorService.setError");
+    setError = function (msg) {        
         this.errorMessage = msg;
     };
 
-    clear = function () {
+    clearError = function () {
         this.errorMessage = null;
+    };
+    
+    setSuccess = function(msg) {
+    	this.successMessage = msg;
+    };
+    
+    clearSuccess = function() {
+    	this.successMessage = null;
     };
 
     return {
         errorMessage: errorMessage,
         setError: setError,
-        clear: clear
+        clearError: clearError,
+        successMessage: successMessage,
+        setSuccess: setSuccess,
+        clearSuccess: clearSuccess
     };
 
 });
 
-replacemeModule.factory('errorHttpInterceptor', function ($q, $location, errorService, $rootScope, $cookieStore) {
+replacemeModule.factory('errorHttpInterceptor', function ($q, $location, alertService, $rootScope, $cookieStore) {
     return function (promise) {
         return promise.then(
             //Success...
@@ -39,7 +54,7 @@ replacemeModule.factory('errorHttpInterceptor', function ($q, $location, errorSe
                 if (response.status === 401) {
                     $rootScope.$broadcast('event:loginRequired');
                 } else if (response.status >= 400 && response.status < 500) {
-                    errorService.setError("Could not find the service you were looking for!");
+                	alertService.setError("Could not find the service you were looking for!");
                 }
                 return $q.reject(response);
             });
@@ -47,45 +62,7 @@ replacemeModule.factory('errorHttpInterceptor', function ($q, $location, errorSe
 });
 
 
-replacemeModule.factory('Authentication', function () {
-    return {
-        getTokenType: function () {
-            return 'Awesome';
-        },
-        getAccessToken: function () {
-            // Fetch from the server in real life
-            return 'asdads131321asdasdasdas';
-        }
-    };
-});
-
-replacemeModule.factory('authHttp', function ($http, Authentication) {
-    var authHttp = {};
-    // Append the right header to the request
-    var extendHeaders = function (config) {
-        config.headers = config.headers || {};
-        config.headers['Authentication'] = Authentication.getTokenType() + ' '
-            + Authentication.getAccessToken();
-    };
-    // Do this for each $http call
-    angular.forEach([ 'get', 'delete', 'head', 'jsonp' ], function (name) {
-        authHttp[name] = function (url, config) {
-            config = config || {};
-            extendHeaders(config);
-            return $http[name](url, config);
-        };
-    });
-    angular.forEach([ 'post', 'put' ], function (name) {
-        authHttp[name] = function (url, data, config) {
-            config = config || {};
-            extendHeaders(config);
-            return $http[name](url, data, config);
-        };
-    });
-    return authHttp;
-});
-
-// Register the countryService...
+// Register the todoService...
 replacemeModule.factory('todoService', [ '$resource', '$routeParams',
     function ($resource, $routeParams) {
         return replaceme.services.ToDoService($resource, $routeParams);
