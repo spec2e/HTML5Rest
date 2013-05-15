@@ -3,7 +3,6 @@ package replaceme;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,7 +16,6 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
-import java.io.InputStream;
 
 @RunWith(Arquillian.class)
 public class E2ETest {
@@ -55,6 +53,7 @@ public class E2ETest {
     }
 
     private static final String TEST_RESOURCE_PREFIX = "src/test/webapp/";
+
     private static String resName(String fileName) {
         return TEST_RESOURCE_PREFIX + fileName;
     }
@@ -74,7 +73,7 @@ public class E2ETest {
         Wait w = new WebDriverWait(driver, 20);
         w.until(e);
 
-        WebElement error   = driver.findElement(By.className("status-error"));
+        WebElement error = driver.findElement(By.className("status-error"));
         WebElement failure = driver.findElement(By.className("status-failure"));
         WebElement success = driver.findElement(By.className("status-success"));
 

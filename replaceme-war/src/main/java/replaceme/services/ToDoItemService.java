@@ -6,7 +6,6 @@ import replaceme.model.ToDoItem;
 import replaceme.model.ToDoItemDummyListFactory;
 
 import javax.validation.Valid;
-
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -17,7 +16,7 @@ import java.util.Map;
 @Path("/secured/ToDo")
 public class ToDoItemService extends CRUDService<ToDoItem> {
 
-	//Just to provide a quick CRUD store...
+    //Just to provide a quick CRUD store...
     private static Map<String, ToDoItem> todos = ToDoItemDummyListFactory.createToDosDummyMap();
 
     //The same for ID
@@ -29,9 +28,9 @@ public class ToDoItemService extends CRUDService<ToDoItem> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @ValidateRequest
-    public ToDoItem create(@Valid ToDoItem resource) {        
+    public ToDoItem create(@Valid ToDoItem resource) {
         resource.setId(counter + "");
-        counter++;        
+        counter++;
         todos.put(resource.getId(), resource);
         return resource;
     }
@@ -51,7 +50,7 @@ public class ToDoItemService extends CRUDService<ToDoItem> {
     @Produces(MediaType.APPLICATION_JSON)
     @ValidateRequest
     public ToDoItem update(@Valid ToDoItem resource) {
-        if(StringUtils.isNotBlank(resource.getId())) {
+        if (StringUtils.isNotBlank(resource.getId())) {
             todos.put(resource.getId(), resource);
         } else {
             throw new IllegalArgumentException("Can not update ToDoItem with no ID attribute!");
@@ -65,7 +64,7 @@ public class ToDoItemService extends CRUDService<ToDoItem> {
     @Consumes(MediaType.APPLICATION_JSON)
     @ValidateRequest
     public void delete(@Valid ToDoItem resource) {
-        if(StringUtils.isNotBlank(resource.getId())) {
+        if (StringUtils.isNotBlank(resource.getId())) {
             todos.put(resource.getId(), resource);
         } else {
             throw new IllegalArgumentException("Can not delete ToDoItem with no ID attribute!");

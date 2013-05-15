@@ -10,7 +10,6 @@ import javax.validation.ValidatorFactory;
 import java.util.Set;
 
 import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
 
 public class ToDoItemTest {
 

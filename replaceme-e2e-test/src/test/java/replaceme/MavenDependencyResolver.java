@@ -1,8 +1,6 @@
 package replaceme;
 
 import java.io.File;
-import java.util.Set;
-import java.util.Properties;
 
 public class MavenDependencyResolver {
 
@@ -12,18 +10,18 @@ public class MavenDependencyResolver {
     private static final int CLASSIFIER_INDEX = 3;
 
     private static String LOCAL_MAVEN_REPO = null;
-                            
-		static {
-			
-			if(System.getProperty("localRepository") != null) {
-				LOCAL_MAVEN_REPO = System.getProperty("localRepository");
-			} else if(System.getProperty("maven.repo.local") != null) {
-				LOCAL_MAVEN_REPO = System.getProperty("maven.repo.local");
-			} else {
-				LOCAL_MAVEN_REPO = System.getProperty("user.home") + File.separatorChar + ".m2" + File.separatorChar + "repository";
-			}
-			
-		}                            
+
+    static {
+
+        if (System.getProperty("localRepository") != null) {
+            LOCAL_MAVEN_REPO = System.getProperty("localRepository");
+        } else if (System.getProperty("maven.repo.local") != null) {
+            LOCAL_MAVEN_REPO = System.getProperty("maven.repo.local");
+        } else {
+            LOCAL_MAVEN_REPO = System.getProperty("user.home") + File.separatorChar + ".m2" + File.separatorChar + "repository";
+        }
+
+    }
 
     public static File resolve(final String groupId, final String artifactId, final String version) {
         return resolve(groupId, artifactId, version, null, "jar");

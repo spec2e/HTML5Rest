@@ -4,7 +4,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 
 @SessionScoped
-public class SessionContext implements Serializable{
+public class SessionContext implements Serializable {
 
     private String authToken;
 

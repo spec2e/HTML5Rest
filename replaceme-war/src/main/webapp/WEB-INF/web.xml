@@ -16,8 +16,8 @@
     </context-param>
 
     <context-param>
-       <param-name>resteasy.servlet.mapping.prefix</param-name>
-       <param-value>/rest</param-value>
+        <param-name>resteasy.servlet.mapping.prefix</param-name>
+        <param-value>/rest</param-value>
     </context-param>
 
     <!-- if you are using Spring, Seam or EJB as your component model, remove the ResourceMethodSecurityInterceptor

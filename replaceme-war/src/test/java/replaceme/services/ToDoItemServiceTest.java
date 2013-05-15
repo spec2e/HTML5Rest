@@ -1,7 +1,6 @@
 package replaceme.services;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.jboss.resteasy.core.Dispatcher;
 import org.jboss.resteasy.mock.MockDispatcherFactory;
 import org.jboss.resteasy.mock.MockHttpRequest;
@@ -13,8 +12,6 @@ import replaceme.model.ToDoItem;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ToDoItemServiceTest {
 
@@ -28,7 +25,7 @@ public class ToDoItemServiceTest {
 
 
         {
-            MockHttpRequest request = MockHttpRequest.post("ToDo/create");
+            MockHttpRequest request = MockHttpRequest.post("secured/ToDo/create");
             request.contentType(MediaType.APPLICATION_JSON_TYPE);
 
             ToDoItem testItem = new ToDoItem();
@@ -48,8 +45,8 @@ public class ToDoItemServiceTest {
             ToDoItem toDoItem = gson.fromJson(response.getContentAsString(), ToDoItem.class);
 
             Assert.assertEquals("10", toDoItem.getId());
-           // Assert.assertEquals("subject", toDoItem.getSubject());
-           // Assert.assertEquals("whatToDo", toDoItem.getWhatToDo());
+            // Assert.assertEquals("subject", toDoItem.getSubject());
+            // Assert.assertEquals("whatToDo", toDoItem.getWhatToDo());
 
         }
 

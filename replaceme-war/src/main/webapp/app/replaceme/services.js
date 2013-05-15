@@ -10,8 +10,8 @@ replacemeModule.factory('alertService', function ($timeout) {
     //'that' will be initialized an object, which is returned by this function
     var that;
 
-    var setTimeOut = function() {
-        $timeout(function() {
+    var setTimeOut = function () {
+        $timeout(function () {
             that.errorMessage = null;
             that.successMessage = null;
         }, 3000, true);
@@ -22,9 +22,9 @@ replacemeModule.factory('alertService', function ($timeout) {
         this.errorMessage = msg;
     };
 
-    setSuccessMessage = function(msg) {
+    setSuccessMessage = function (msg) {
         setTimeOut();
-    	this.successMessage = msg;
+        this.successMessage = msg;
     };
 
     that = {
@@ -44,7 +44,7 @@ replacemeModule.factory('errorHttpInterceptor', function ($q, $location, alertSe
             //Success...
             function (response) {
 
-                if(response.headers(replaceme.AUTHENTICATION_COOKIE)) {
+                if (response.headers(replaceme.AUTHENTICATION_COOKIE)) {
                     var authToken = response.headers(replaceme.AUTHENTICATION_COOKIE);
                     $cookieStore.put(replaceme.AUTHENTICATION_COOKIE, authToken);
                 }
@@ -56,7 +56,7 @@ replacemeModule.factory('errorHttpInterceptor', function ($q, $location, alertSe
                 if (response.status === 401) {
                     $rootScope.$broadcast('event:loginRequired');
                 } else if (response.status >= 400 && response.status < 500) {
-                	alertService.setErrorMessage("Could not find the service you were looking for!");
+                    alertService.setErrorMessage("Could not find the service you were looking for!");
                 }
                 return $q.reject(response);
             });

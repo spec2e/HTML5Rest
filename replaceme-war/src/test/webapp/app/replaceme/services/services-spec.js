@@ -1,15 +1,16 @@
 describe('ToDoService tests', function () {
 
     var toDoJsonData = [
-        {"subject":"Fritid hjemme","whatToDo":"Se fjernsyn","id":"1"},
-        {"subject":"Pligt hjemme","whatToDo":"Lave mad","id":"2"},
-        {"subject":"Pligt hjemme","whatToDo":"Bage boller","id":"3"},
-        {"subject":"Skole","whatToDo":"Huske at lave lektier","id":"4"},
-        {"subject":"Motion","whatToDo":"Cykeltur","id":"5"},
-        {"subject":"Arbejde","whatToDo":"Huske møder","id":"6"},
-        {"subject":"Familie","whatToDo":"Hente børn i SFO","id":"7"},
-        {"subject":"Huset","whatToDo":"Ordne haven","id":"8"},
-        {"subject":"Huset","whatToDo":"Male huset","id":"9"}] ;
+        {"subject": "Fritid hjemme", "whatToDo": "Se fjernsyn", "id": "1"},
+        {"subject": "Pligt hjemme", "whatToDo": "Lave mad", "id": "2"},
+        {"subject": "Pligt hjemme", "whatToDo": "Bage boller", "id": "3"},
+        {"subject": "Skole", "whatToDo": "Huske at lave lektier", "id": "4"},
+        {"subject": "Motion", "whatToDo": "Cykeltur", "id": "5"},
+        {"subject": "Arbejde", "whatToDo": "Huske møder", "id": "6"},
+        {"subject": "Familie", "whatToDo": "Hente børn i SFO", "id": "7"},
+        {"subject": "Huset", "whatToDo": "Ordne haven", "id": "8"},
+        {"subject": "Huset", "whatToDo": "Male huset", "id": "9"}
+    ];
 
     //Create an easily-removed container for our tests to play in
     beforeEach(function () {

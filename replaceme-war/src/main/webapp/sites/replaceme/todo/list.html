@@ -3,8 +3,9 @@
 
     <table>
         <tr>
-            <td><input type="text" placeholder="Search query" ng-model="query" /></td>
-            <td><input type="text" placeholder="Select from-date" ui-date="datepickerOptions" ui-date-format="dd-mm-yy" ng-model="myDate"  /></td>            
+            <td><input type="text" placeholder="Search query" ng-model="query"/></td>
+            <td><input type="text" placeholder="Select from-date" ui-date="datepickerOptions" ui-date-format="dd-mm-yy"
+                       ng-model="myDate"/></td>
         </tr>
     </table>
 
@@ -33,7 +34,7 @@
                                    ng-blur="toggleEditSubject($index, $event)"
                                    ng-model="todo.subject"
                                    ng-show="isSubjectEditing($index)"
-                                   ng-hide="!isSubjectEditing($index)" />
+                                   ng-hide="!isSubjectEditing($index)"/>
                         </td>
                         <td>{{todo.whatToDo}}</td>
                     </tr>
