@@ -4,8 +4,8 @@
 
         <form class="form-signin" ng-submit="login()">
             <h2 class="form-signin-heading">Please sign in</h2>
-            <input type="text" class="input-block-level" placeholder="User namme" ng-model="userName">
-            <input type="password" class="input-block-level" placeholder="Password" ng-model="password">
+            <input type="email" class="input-block-level" placeholder="user@company.com" required ng-model="userName">
+            <input type="password" class="input-block-level" placeholder="Password" required ng-model="password">
             <button class="btn btn-primary" type="submit">Sign in</button>
         </form>
 
