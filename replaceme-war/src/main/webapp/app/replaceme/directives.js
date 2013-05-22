@@ -1,7 +1,15 @@
+/*jslint browser : true, continue : true,
+         devel : true, indent : 2, maxerr : 50,
+         newcap : true, nomen : true, plusplus : true,
+         regexp : true, sloppy : true, vars : false,
+         white : false
+*/
+/*global replacemeModule, angular*/
+
 // ngBlur directive
 replacemeModule.directive('ngBlur', [ '$parse', function ($parse) {
     return function (scope, element, attr) {
-        var fn = $parse(attr['ngBlur']);
+        var fn = $parse(attr.ngBlur);
         element.bind('blur', function (event) {
             scope.$apply(function () {
                 fn(scope, {
@@ -24,19 +32,22 @@ replacemeModule.directive('ngFocus', function ($timeout) {
     };
 });
 
-replacemeModule.directive('menuSelected', ['$location', function ($location) {
+replacemeModule.directive('menuSelected', function ($location) {
     return function (scope, element, attr) {
         // If the route changes we should probably also
         // change the selected menu item...
         scope.$on(
             '$routeChangeSuccess',
             function (scope, next, current) {
-                var url = $location.url();
+                var url, 
+                    nestedLink, 
+                    menuUrl;
+                url = $location.url();
                 // Take the link that is
                 // insiede the <li> element
-                var nestedLink = angular.element(element.children()[0]);
+                nestedLink = angular.element(element.children()[0]);
                 if (nestedLink) {
-                    var menuUrl = nestedLink.attr('href');
+                    menuUrl = nestedLink.attr('href');
                     if (!menuUrl) {
                         throw 'menuSelected: Could not find anchor tag! There must be a <a href...> tag inside the <li menu-selected...> tag.';
                     }
@@ -49,4 +60,4 @@ replacemeModule.directive('menuSelected', ['$location', function ($location) {
 
             });
     };
-} ]);
+});

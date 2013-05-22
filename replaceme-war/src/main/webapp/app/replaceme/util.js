@@ -1,3 +1,11 @@
+/*jslint browser : true, continue : true,
+         devel : true, indent : 2, maxerr : 50,
+         newcap : true, nomen : true, plusplus : true,
+         regexp : true, sloppy : true, vars : false,
+         white : false
+*/
+/*global window, angular*/
+
 /**
  * Utility method that creates or reuses namespaces for use in the Javascript module pattern.
  * Sets the created namespace in the window scope
@@ -8,13 +16,14 @@
 function namespace(namespaceString) {
     var parts = namespaceString.split('.'),
         parent = window,
-        currentPart = '';
+        currentPart = ''
+        ;
 
-    for (var i = 0, length = parts.length; i < length; i++) {
-        currentPart = parts[i];
+    angular.forEach(parts, function(value, key) {
+        currentPart = value;
         parent[currentPart] = parent[currentPart] || {};
         parent = parent[currentPart];
-    }
+    });    
 
     return parent;
 }

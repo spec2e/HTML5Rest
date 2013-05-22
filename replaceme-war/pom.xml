@@ -55,7 +55,23 @@
                     </fileNames>
                 </configuration>
             </plugin>
-
+		    <plugin>
+		      <groupId>org.codehaus.mojo</groupId>
+		      <artifactId>jslint-maven-plugin</artifactId>
+		      <version>1.0.1</version>
+		      <configuration>
+		      	<sourceJsFolder>src/main/webapp/app</sourceJsFolder>
+		      	
+		      </configuration>
+		      <executions>
+		        <execution>
+		          <goals>
+		            <goal>jslint</goal>
+		            <goal>test-jslint</goal>
+		          </goals>
+		        </execution>
+		      </executions>
+		    </plugin>
             <plugin>
                 <groupId>com.github.searls</groupId>
                 <artifactId>jasmine-maven-plugin</artifactId>

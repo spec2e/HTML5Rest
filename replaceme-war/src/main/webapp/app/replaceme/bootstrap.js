@@ -1,3 +1,11 @@
+/*jslint browser : true, continue : true,
+         devel : true, indent : 2, maxerr : 50,
+         newcap : true, nomen : true, plusplus : true,
+         regexp : true, sloppy : true, vars : false,
+         white : false
+*/
+/*global replaceme, namespace, angular*/
+
 namespace('replaceme');
 
 //Name of the module that is used in this app
@@ -18,7 +26,7 @@ replacemeModule.config([ '$routeProvider', '$httpProvider',
     function ($routeProvider, $httpProvider) {
 
         //Set up routes for the customer site
-        $routeProvider.
+	    $routeProvider.
             when('/login', {templateUrl: 'sites/replaceme/login/login.html', controller: replaceme.login.LoginController}).
             when('/home', {templateUrl: 'sites/replaceme/home/home.html', controller: replaceme.home.HomeController}).
             when('/todo/create', {templateUrl: 'sites/replaceme/todo/create.html', controller: replaceme.todo.CreateController}).
@@ -47,11 +55,11 @@ replacemeModule.run(function ($rootScope, $location, alertService, $http, $cooki
             success(function (data, status, headers, config) {
                 //Remove the authentication cookie
                 $cookieStore.put(replaceme.AUTHENTICATION_COOKIE, '');
-                $location.path("/home")
+                $location.path("/home");
             }).error(function (data, status, headers, config) {
                 //Remove the authentication cookie anyway...
                 $cookieStore.put(replaceme.AUTHENTICATION_COOKIE, '');
-                $location.path("/home")
+                $location.path("/home");
             });
     };
 

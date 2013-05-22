@@ -1,3 +1,11 @@
+/*jslint browser : true, continue : true,
+         devel : true, indent : 2, maxerr : 50,
+         newcap : true, nomen : true, plusplus : true,
+         regexp : true, sloppy : true, vars : false,
+         white : false
+*/
+/*global namespace, replaceme, replacemeModule, angular*/
+
 namespace('replaceme.services');
 
 replacemeModule.factory('alertService', function ($timeout) {
@@ -5,12 +13,12 @@ replacemeModule.factory('alertService', function ($timeout) {
     var errorMessage,
         setErrorMessage,
         successMessage,
-        setSuccessMessage;
+        setSuccessMessage,
+        //'that' will be initialized to the object, which is returned by this function
+        that,
+        setTimeOut;
 
-    //'that' will be initialized an object, which is returned by this function
-    var that;
-
-    var setTimeOut = function () {
+    setTimeOut = function () {
         $timeout(function () {
             that.errorMessage = null;
             that.successMessage = null;
@@ -19,12 +27,12 @@ replacemeModule.factory('alertService', function ($timeout) {
 
     setErrorMessage = function (msg) {
         setTimeOut();
-        this.errorMessage = msg;
+        errorMessage = msg;
     };
 
     setSuccessMessage = function (msg) {
         setTimeOut();
-        this.successMessage = msg;
+        successMessage = msg;
     };
 
     that = {
@@ -73,12 +81,11 @@ replacemeModule.factory('todoService', [ '$resource', '$routeParams',
 
 replaceme.services.ToDoService = function ($resource, $routeParams) {
 
-    var REST_CREATE_URL = replaceme.REST_BASE_URL + 'secured/ToDo/create';
-    var REST_READ_URL = replaceme.REST_BASE_URL + 'secured/ToDo/read/:id';
-    var REST_LIST_URL = replaceme.REST_BASE_URL + 'secured/ToDo/all';
-    var REST_UPDATE_URL = replaceme.REST_BASE_URL + 'secured/ToDo/update';
-
-    var create,
+    var REST_CREATE_URL = replaceme.REST_BASE_URL + 'secured/ToDo/create',
+        REST_READ_URL = replaceme.REST_BASE_URL + 'secured/ToDo/read/:id',
+        REST_LIST_URL = replaceme.REST_BASE_URL + 'secured/ToDo/all',
+        REST_UPDATE_URL = replaceme.REST_BASE_URL + 'secured/ToDo/update',
+        create,
         read,
         update,
         remove,
@@ -89,8 +96,13 @@ replaceme.services.ToDoService = function ($resource, $routeParams) {
 
     create = function (todo, callback) {
         //console.log("ToDoService.create");
-        var ToDoProxy = $resource(REST_CREATE_URL);
-        var proxy = new ToDoProxy();
+        var ToDoProxy,
+            proxy
+            ;
+        
+        ToDoProxy = $resource(REST_CREATE_URL);
+        proxy = new ToDoProxy();
+        
         proxy.subject = todo.subject;
         proxy.whatToDo = todo.whatToDo;
 
@@ -102,16 +114,20 @@ replaceme.services.ToDoService = function ($resource, $routeParams) {
     };
 
     read = function (id, callback) {
-        //console.log("ToDoService.read");
-
+        
+        var todoProxy,
+            loadedTodo
+            ;
+        
+        todoProxy = $resource(REST_READ_URL);
+        
         //If we already have the country loaded, just put it in the callback and return
         if (currentTodo && currentTodo.id === id) {
             callback(currentTodo);
             return;
-        }
-
-        var todoProxy = $resource(REST_READ_URL);
-        var loadedTodo = countryProxy.get({id: $routeParams.id}, function (data) {
+        }        
+        
+        loadedTodo = todoProxy.get({id: $routeParams.id}, function (data) {
             var todo = new replaceme.model.ToDo(data);
             currentTodo = todo;
             callback(todo);
@@ -128,8 +144,13 @@ replaceme.services.ToDoService = function ($resource, $routeParams) {
     };
 
     update = function (todo, callback) {
-        var ToDoUpdateProxy = $resource(REST_UPDATE_URL);
-        var proxy = new ToDoUpdateProxy();
+        
+        var ToDoUpdateProxy,
+            proxy
+            ;
+        
+        ToDoUpdateProxy = $resource(REST_UPDATE_URL);
+        proxy = new ToDoUpdateProxy();
         proxy.id = todo.id;
         proxy.subject = todo.subject;
         proxy.whatToDo = todo.whatToDo;
